@@ -1,0 +1,9 @@
+<form method="post" action="." enctype="multipart/form-data">
+                {% csrf_token %}
+
+      <!-- 文章标题图 -->
+            <div class="form-group">
+                <label for="avatar">profile</label>
+                <input type="file" class="form-control-file" name="avatar" id="avatar">
+            </div>
+</form>

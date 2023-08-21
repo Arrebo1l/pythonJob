@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    文章详情
+{% endblock title %}
+
+{% block content %}
+
+<div class="container" >
+    <div class="row">
+        <div class="col-9">
+            <h1 class="mt-4 mb-4">{{ article.title }}</h1>
+            <div class="alert alert-success">
+                <div>      <!--only author can see delete and update -->
+                    author:  {{ article.author }}
+                    {% if user == article.author %}
+                         -<a href="#" onclick="confirm_safe_delete()">Delete</a>
+                         -<a href="{% url 'article:article_update' article.id %}">Edit Article</a>
+                    {% endif %}<br>
+                    浏览：{{ article.total_views }}
+                </div>
+            </div>
+
+
+            <div class="col-12">
+                <p>{{ article.body|safe }}</p>
+            </div>
+            <hr>
+        {% if user.is_authenticated %}
+        <div>
+            <form
+                action="{% url 'comment:post_comment' article.id %}"
+                method="POST"
+            >
+            {% csrf_token %}
+                <div class="form-group">
+                    <label for="body">
+                        <strong>
+                            Comment:
+                        </strong>
+                    </label>
+                <div>
+            {{ comment_form.media }}
+            {{ comment_form.body }}
+        </div>
+                </div>
+                <!-- 提交按钮 -->
+                <button type="submit" class="btn btn-primary ">Post</button>
+            </form>
+        </div>
+        <br>
+    {% else %}
+        <br>
+        <h5 class="row justify-content-center">
+            Please<a href="{% url 'userprofile:login' %}">Login</a>First!
+        </h5>
+        <br>
+    {% endif %}
+
+
+
+    <!-- 显示评论 -->
+    <h4>{{ comments.count }}comments</h4>
+    <div>
+        {% for comment in comments %}
+            <hr>
+            <p>
+                <strong style="color: pink">
+                    {{ comment.user }}
+                </strong> 于
+                <span style="color: green">
+                    {{ comment.created|date:"Y-m-d H:i:s" }}
+                </span> 时说：
+            </p>
+            <pre style="font-family: inherit; font-size: 1em;">
+                    {{ comment.body | safe }}</pre>
+        {% endfor %}
+    </div>
+        </div>
+
+
+
+        <div class="col-3 mt-4" id="sidebar" class="sidebar">
+            <div class="sidebar__inner">
+            <h4><strong>Content</strong></h4>
+            <hr>
+            <div>
+                {{ toc|safe }}
+            </div>
+        </div>
+    </div>
+
+</div>
+   </div>
+</style>
+
+<form
+      style="display:none;"
+      id="safe_delete"
+      action="{% url 'article:article_safe_delete' article.id %}"
+      method="POST"
+      >
+    {% csrf_token %}
+    <button type="submit">Post</button>
+</form>
+
+
+<script>
+    function confirm_safe_delete(){
+        layer.open({
+            title:"Confirm Delete",
+            btn:['Confirm'],
+            content:"Do you confirm that you want to delete the article?",
+            yes: function(index,layero){
+                $('form#safe_delete button').click();
+                layer.close(index);
+            }
+        })
+    }
+</script>
+<script src="{% static 'ckeditor/ckeditor/plugins/prism/lib/prism/prism_patched.min.js' %}"></script>
+<link rel="stylesheet" href="{% static 'prism/prism.css' %}">
+     <!-- 粘性侧边栏样式 -->
+<style>
+    .sidebar{
+        will-change: min-height;
+    }
+
+    .sidebar__inner{
+        transform: translate(0, 0);
+        transform: translate3d(0, 0, 0);
+        will-change: position, transform;
+    }
+</style>
+{% block script %}
+<script>
+    $(".django-ckeditor-widget").removeAttr('style');
+</script>
+<script src="{% static 'sticky_sidebar/jquery.sticky-sidebar.min.js' %}"></script>
+<script type="text/javascript">
+    $('#sidebar').stickySidebar({
+        topSpacing: 20,
+        bottomSpacing: 20,
+    });
+</script>
+{% endblock script %}
+
+{% endblock content %}

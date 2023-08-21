@@ -1,0 +1,82 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color:rgba(0,0,0,0.8);">
+  <div class="container">
+
+    <a class="navbar-brand" href="#" style="color: white;">
+        <img src="{% static 'Images/logo.jpg' %}" width=170" height="40" alt="" loading="lazy">
+    </a>
+
+    <div>
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'home:home' %}" style="font-family:Type Machine; color:white; font-size: 20px;">Home</a>
+        </li>
+        <li class="nav-item">
+            <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-family:Type Machine; color:white; font-size: 20px">
+              Rehabilitation Program
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href='{% url "Online:Online_Consultation" %}' style="font-family:Type Machine; font-size: 19px;">Online Consultation</a>
+                <a class="dropdown-item" href="{% url 'article:article_list' %}" style="font-family:Type Machine; font-size: 19px;">Education</a>
+            </div>
+          <li class="nav-item">
+            <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-family:Type Machine; color:white; font-size: 20px">
+              Jobs
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="{% url 'find:Coach_Job' %}" style="font-family:Type Machine; font-size: 19px;">Coach Jobs</a>
+                <a class="dropdown-item" href="{% url 'find:Management_Job' %}" style="font-family:Type Machine; font-size: 19px;">Management Jobs</a>
+                <a class="dropdown-item" href="{% url 'find:Sales_Job' %}"  style="font-family:Type Machine; font-size: 19px;">Sales Jobs</a>
+                <a class="dropdown-item" href="{% url 'find:Other_Job' %}"  style="font-family:Type Machine; font-size: 19px;">Other Jobs</a>
+            </div>
+          {% if user.is_authenticated %}
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-family:Type Machine; color:white; font-size: 20px">
+              {{ user.username }}
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href='{% url "userprofile:edit" user.id %}' style="font-family:Type Machine; font-size: 19px;">User Profile</a>
+                <a class="dropdown-item" href="#" onclick="user_delete()" style="font-family:Type Machine; font-size: 19px;">Delete User</a>
+                <a class="dropdown-item" href='{% url "userprofile:logout" %}' style="font-family:Type Machine; font-size: 19px;">Log out</a>
+            </div>
+        </li>
+    {% else %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'userprofile:login' %}" style="font-family:Type Machine; color:white; font-size: 20px">Log in</a>
+        </li>
+    {% endif %}
+
+      </ul>
+    </div>
+
+  </div>
+</nav>
+
+{% if user.is_authenticated %}
+<form
+    style="display:none;"
+    id="user_delete"
+    action="{% url 'userprofile:delete' user.id %}"
+    method="POST"
+>
+{% csrf_token %}
+    <button type="submit">Send</button>
+</form>
+    <script>
+        function user_delete() {
+            // 调用layer弹窗组件
+            layer.open({
+                title: "Confirm Delete",
+                content: "Are you sure you want to delete the user profile?",
+                yes: function(index, layero) {
+                    $('form#user_delete button').click();
+                    layer.close(index);
+                },
+            })
+        }
+    </script>
+{% endif %}
+
+

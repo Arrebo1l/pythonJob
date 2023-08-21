@@ -1,0 +1,79 @@
+<!-- extends表明此页面继承自 base.html 文件 -->
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load static %}
+
+<!-- 写入 base.html 中定义的 title -->
+{% block title %}
+    首页
+{% endblock title %}
+
+<!-- 写入 base.html 中定义的 content -->
+{% block content %}
+
+<!-- 定义放置文章标题的div容器 -->
+<div id="demo" class="carousel slide" data-ride="carousel">
+
+      <!-- 指示符 -->
+      <ul class="carousel-indicators">
+        <li data-target="#demo" data-slide-to="0" class="active"></li>&nbsp;
+        <li data-target="#demo" data-slide-to="1"></li>&nbsp;
+        <li data-target="#demo" data-slide-to="2"></li>
+      </ul>
+
+      <!-- 轮播图片 -->
+      <div class="carousel-inner"  data-ride="carousel">
+        <div class="carousel-item active">
+          <img src="{% static 'Images/bg1.png' %}" style="margin: 0 auto;">
+
+        </div>
+        <div class="carousel-item">
+          <img src="{% static 'Images/bg2.png' %}">
+
+        </div>
+        <div class="carousel-item">
+          <img src="{% static 'Images/bg3.png' %}">
+
+        </div>
+      </div>
+    <br><br>
+
+      <!-- 左右切换按钮 -->
+      <a class="carousel-control-prev" href="#demo" data-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+      </a>
+      <a class="carousel-control-next" href="#demo" data-slide="next">
+        <span class="carousel-control-next-icon"></span>
+      </a>
+
+</div>
+
+
+<div class="container-fluid" id="Introduction">
+      <header class="masthead text-black">
+          <div class="masthead-content">
+            <div class="container">
+              <h1 class="masthead-heading mb-0 text-center" id="colorchange4">The Introduction of AthletesRevent</h1><br>
+              <h3 class="masthead-subheading mb-0 text-left" id="colorchange2">
+                Welcome to the hub of revitalization and growth for retired athletes. Our platform is dedicated to empowering those who have given their all on the field, track, or court and are now looking to transition into the next phase of their lives. Through personalized rehabilitation programs and career guidance, we support retired athletes in their physical recovery and prepare them for fulfilling new career paths. We believe in nurturing not just the body, but also the mind, spirit, and aspirations of those who have inspired countless fans around the world.
+                </h3>
+            </div>
+          </div><br><br><br>
+      </header>
+</div>
+
+ <div class="container-fluid" id="Purpose">
+      <header class="masthead text-black">
+          <div class="masthead-content">
+          <div class="container">
+              <h1 class="masthead-heading mb-0 text-center" id="colorchange4">The purpose of AthletesRevent</h1><br>
+              <h3 class="masthead-subheading mb-0 text-left" id="colorchange2">
+                Our mission is to provide retired athletes with a comprehensive roadmap to success beyond their sports careers. Our specialized rehabilitation program focuses on physical and emotional well-being, enabling a smooth transition from professional sports into everyday life. Furthermore, our re-employment initiatives are designed to unlock new opportunities, aligning the skills and passions of retired athletes with potential career fields. Whether it's starting a new business, joining the corporate world, or contributing to community services, we aim to help retired athletes rediscover their purpose and achieve their dreams. Together, we build bridges to new beginnings.
+            </h3>
+          </div>
+        </div><br><br><br>
+      </header>
+    </div>
+
+
+{% endblock content %}

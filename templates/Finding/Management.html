@@ -1,0 +1,39 @@
+<!-- extends表明此页面继承自 base.html 文件 -->
+{% extends "base.html" %}
+{% load staticfiles %}
+
+<!-- 写入 base.html 中定义的 title -->
+{% block title %}
+    首页
+{% endblock title %}
+
+<!-- 写入 base.html 中定义的 content -->
+{% block content %}
+
+<!-- 定义放置文章标题的div容器 -->
+<br><br>
+<div class="container">
+
+    <div class="row mt-2" >
+
+        {% for MJ in Management_Job %}
+
+        <!-- 文章内容 -->
+        <div class="col-6 mb-4">
+            <div class="card" style="width:400px">
+
+                <img class="card-img-top">
+
+                <div class="card-body">
+                    <h4 class="card-title">{{ MJ.Management_Job }}</h4>
+                    <p class="card-text">{{ MJ.body|slice:'100' }}...</p>
+                    <a href="{% url 'find:Management_Job-detail' MJ.id %}" class="btn btn-primary">View Details</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+{% endblock content %}
