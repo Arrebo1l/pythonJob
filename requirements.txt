@@ -2,5 +2,4 @@ Django==4.2.4
 django_mptt==0.14.0
 django_taggit==4.0.0
 Markdown==3.4.1
-Pillow==9.4.0
 Pillow==10.0.0
