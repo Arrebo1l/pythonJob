@@ -22,10 +22,10 @@ def article_list(request):
     columnid = ArticleColumn.objects.filter(title=column).first()
     tag = request.GET.get('tag')
 
-    # 初始化查询集
+    # Initialize Query
     article_list = ArticlePost.objects.all()
 
-    # 搜索查询集
+    # Search
     if search:
         article_list = article_list.filter(
             Q(title__icontains=search) |
@@ -34,7 +34,7 @@ def article_list(request):
     else:
         search = ''
 
-    # 栏目查询集
+    # Column
     if column is not None:
         # article_list = article_list.filter(column=column)
         article_list = ArticlePost.objects.filter(Q(column_id=columnid))

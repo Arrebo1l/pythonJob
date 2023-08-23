@@ -19,14 +19,13 @@
                 <form method="post" action="." enctype="multipart/form-data">
                     {% csrf_token %}
 
+
             <!-- avatar -->
-                <div class="form-group">
-                    <label for="avatar">Upload Portrait</label>
-                    <input type="file" class="form-control-file" name="avatar" id="avatar">
+                <div class="form-group col-md-4">
+                    <input type="file" class="custom-file-input" name="avatar" id="avatar">
+                    <label class="custom-file-label" for="avatar">Upload Portrait</label>
                 </div>
 
-            <form method="post" action=".">
-                {% csrf_token %}
                 <!-- phone -->
                 <div class="form-group col-md-4">
                     <label for="phone">Phone</label>
