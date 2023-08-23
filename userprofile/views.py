@@ -22,15 +22,15 @@ def user_login(request):
                 login(request, user)
                 return redirect("article:article_list")
             else:
-                return HttpResponse("账号或密码输入有误。请重新输入~")
+                return HttpResponse("The username or password entered is incorrect. Please re-enter~")
         else:
-            return HttpResponse("账号或密码输入不合法")
+            return HttpResponse("The username or password entered is incorrect")
     elif request.method == 'GET':
         user_login_form = UserLoginForm()
         context = {'form': user_login_form}
         return render(request, 'userprofile/login.html', context)
     else:
-        return HttpResponse("请使用GET或POST请求数据")
+        return HttpResponse("Please use GET or POST to request data")
 
 
 def user_logout(request):
@@ -48,13 +48,13 @@ def user_register(request):
             login(request, new_user)
             return redirect("article:article_list")
         else:
-            return HttpResponse("注册表单输入有误。请重新输入~")
+            return HttpResponse("The registration form input is incorrect. Please re-enter~.")
     elif request.method == 'GET':
         user_register_form = UserRegisterForm()
         context = {'form': user_register_form}
         return render(request, 'userprofile/register.html', context)
     else:
-        return HttpResponse("请使用GET或POST请求数据")
+        return HttpResponse("Please use GET or POST to request data")
 
 
 @login_required(login_url='/userprofile/login/')
@@ -66,9 +66,9 @@ def user_delete(request, id):
             user.delete()
             return redirect("article:article_list")
         else:
-            return HttpResponse("你没有删除操作的权限。")
+            return HttpResponse("ou do not have permission to perform the delete operation.")
     else:
-        return HttpResponse("仅接受post请求。")
+        return HttpResponse("Only accepts POST requests.")
 
 
 @login_required(login_url='/userprofile/login/')
@@ -81,7 +81,7 @@ def profile_edit(request, id):
 
     if request.method == 'POST':
         if request.user != user:
-            return HttpResponse("你没有权限修改此用户信息。")
+            return HttpResponse("You do not have the permission to modify this user's information")
 
         profile_form = ProfileForm(request.POST, request.FILES)
 
@@ -94,11 +94,11 @@ def profile_edit(request, id):
             profile.save()
             return redirect("userprofile:edit", id=id)
         else:
-            return HttpResponse("注册表单输入有误。请重新输入~")
+            return HttpResponse("The registration form input is incorrect. Please re-enter~")
 
     elif request.method == 'GET':
         profile_form = ProfileForm()
         context = {'profile_form': profile_form, 'profile': profile, 'user': user}
         return render(request, 'userprofile/edit.html', context)
     else:
-        return HttpResponse("请使用GET或POST请求数据")
+        return HttpResponse("Please use GET or POST to request data")

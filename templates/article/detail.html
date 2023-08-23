@@ -18,7 +18,7 @@
                          -<a href="#" onclick="confirm_safe_delete()">Delete</a>
                          -<a href="{% url 'article:article_update' article.id %}">Edit Article</a>
                     {% endif %}<br>
-                    浏览：{{ article.total_views }}
+                    View：{{ article.total_views }}
                 </div>
             </div>
 
@@ -68,10 +68,10 @@
             <p>
                 <strong style="color: pink">
                     {{ comment.user }}
-                </strong> 于
+                </strong>
                 <span style="color: green">
                     {{ comment.created|date:"Y-m-d H:i:s" }}
-                </span> 时说：
+                </span>
             </p>
             <pre style="font-family: inherit; font-size: 1em;">
                     {{ comment.body | safe }}</pre>
